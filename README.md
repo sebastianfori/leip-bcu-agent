@@ -64,8 +64,5 @@ Un único agente no satisface la arquitectura completa de consenso de LEIP. Los 
 
 Las pruebas cubren errores de valores y períodos, duplicados, tablas ambiguas, faltantes, orígenes no admitidos y preservación del historial. La persistencia se prueba con mongomock; una prueba con MongoDB real se documenta por separado en `docs/verification.md`.
 
-## Decisiones y próximos pasos
-
-Ver [arquitectura y decisiones](docs/architecture.md). Para la tutoría: explicar qué hace cada componente, justificar MongoDB y LangChain, mostrar el JSON y luego implementar extractores B/C independientes y un validador de consenso antes de habilitar publicación.
 
 Referencias: [LangChain agents](https://docs.langchain.com/oss/python/langchain/agents), [salida estructurada](https://docs.langchain.com/oss/python/langchain/structured-output), [Gemini y LangChain](https://docs.langchain.com/oss/python/integrations/chat/google_generative_ai), [cuota gratuita y precios de Gemini](https://ai.google.dev/gemini-api/docs/pricing), [fuente BCU](https://www.bcu.gub.uy/Politica-Economica-y-Mercados/Expectativas%20para%20la%20inflacin%20y%20la%20economa/Monitor_trimestral_set26.html).
