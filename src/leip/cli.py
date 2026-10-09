@@ -38,6 +38,8 @@ def main():
         run["error_type"] = type(error).__name__
         args.output_dir.mkdir(parents=True, exist_ok=True)
         (args.output_dir / f"{run['_id']}.json").write_text(json.dumps(run, ensure_ascii=False, indent=2), encoding="utf-8")
+        if getattr(error, "code", None) in ("credit_balance_exhausted", "insufficient_quota"):
+            parser.exit(1, "OpenAI no tiene saldo o cuota disponible para esta clave/proyecto. Revisá Billing en platform.openai.com. Podés ejecutar --demo mientras tanto.\n")
         parser.exit(1, f"Extracción retenida ({type(error).__name__}). Revisá configuración, acceso y formato de la publicación.\n")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     path = args.output_dir / f"{run['_id']}.json"

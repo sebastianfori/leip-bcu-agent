@@ -8,11 +8,11 @@
 - Resultados: mediana a 12 meses **4,60 %**; mediana a 24 meses **4,55 %**. Períodos: 2026-09 a 2027-08 y 2026-09 a 2028-08, respectivamente.
 - SHA-256 de la captura de prueba: `5f22ea04cd99be89c7691912c84143a812a46b5f390142e3d13aa5c37660e767`.
 - Verificación TLS habilitada; se usa el almacén de confianza del sistema con `truststore`.
+- MongoDB real: se inició el servicio con `docker compose up -d`, se ejecutó `leip --demo` y se confirmó por consulta independiente que la ejecución quedó guardada con dos observaciones y estado `candidate_for_review`.
 
 ## Pendiente de comprobar
 
-- Llamada real al modelo: no se encontró `OPENAI_API_KEY` configurada. La construcción del agente está comprobada; la respuesta real y su costo requieren una clave y acceso al modelo seleccionado.
-- MongoDB real: Docker estaba instalado pero su motor no estaba disponible. El almacenamiento se verificó con mongomock. Ejecutar Docker Desktop, `docker compose up -d` y `leip --demo` para verificar el servidor real.
+- Extracción completa con respuesta real del modelo: requiere una clave API con cuota y acceso al modelo seleccionado. La construcción del agente está comprobada; todavía no se verificó una respuesta exitosa del proveedor.
 - Consenso triple, investigación y publicación automática: fuera del alcance de este prototipo.
 
 No confundir la demo determinística con una extracción hecha por el modelo. Los datos obtenidos siguen siendo candidatos para revisión.
