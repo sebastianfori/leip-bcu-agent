@@ -1,0 +1,12 @@
+{
+  "description": "Ejemplo verificado contra el monitor BCU de setiembre de 2026; demo determinística, no salida de un modelo",
+  "country": "URY",
+  "survey_month": "2026-09",
+  "variable": "inflation_expectation",
+  "statistic": "median",
+  "unit": "percent",
+  "observations": [
+    {"horizon_months": 12, "target_start": "2026-09", "target_end": "2027-08", "raw_value": "4,60", "value": 4.6},
+    {"horizon_months": 24, "target_start": "2026-09", "target_end": "2028-08", "raw_value": "4,55", "value": 4.55}
+  ]
+}

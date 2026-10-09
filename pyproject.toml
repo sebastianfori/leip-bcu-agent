@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "leip-bcu-agent"
+version = "0.1.0"
+description = "Prototipo LEIP: extracción trazable de expectativas del BCU"
+requires-python = ">=3.11"
+dependencies = ["langchain>=1,<2", "langchain-openai>=1,<2", "pydantic>=2,<3", "pymongo>=4.10,<5", "httpx>=0.28,<1", "beautifulsoup4>=4.12,<5", "python-dotenv>=1,<2", "truststore>=0.10,<1"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "mongomock>=4,<5"]
+
+[project.scripts]
+leip = "leip.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
