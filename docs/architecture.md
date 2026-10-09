@@ -7,7 +7,7 @@ flowchart LR
     BCU[BCU: publicación HTML] --> Capture[Captura HTTP y hash]
     Capture --> Disk[Artefacto inmutable en disco]
     Disk --> Reader[Lector determinístico de tabla]
-    Reader --> Agent[Extractor A: LangChain + OpenAI]
+    Reader --> Agent[Extractor A: LangChain + Gemini en la nube]
     Agent --> Validator[Validador de cobertura y evidencia]
     Reader --> Validator
     Validator --> JSON[JSON de ejecución]
@@ -40,7 +40,9 @@ PostgreSQL sería una buena opción para el Data Hub de series normalizadas: int
 
 ## LangChain frente a alternativas
 
-LangChain responde a lo conversado en tutoría y ofrece agentes, herramientas y esquemas estructurados; usa LangGraph para ejecución. El proyecto usa `create_agent` y `ToolStrategy` con un modelo OpenAI configurable. Un SDK directo OpenAI simplificaría dependencias para una sola llamada; LangGraph explícito podría convenir cuando se agreguen ramas, colas y reintentos; otros frameworks requerirían evaluar soporte y complejidad. La elección aquí permite practicar el framework acordado sin implementar toda la plataforma.
+LangChain responde a lo conversado en tutoría y ofrece agentes, herramientas y esquemas estructurados; usa LangGraph para ejecución. El proyecto usa `create_agent` y `ToolStrategy` con un modelo Gemini configurable en la nube. Se selecciona Gemini Developer API de AI Studio, evitando Vertex AI y proveedores de respaldo; su cuota gratuita permite probar con un proyecto Free tier. OpenAI se conserva como opción explícita. Un SDK directo simplificaría dependencias para una sola llamada; LangGraph explícito podría convenir cuando se agreguen ramas, colas y reintentos; otros frameworks requerirían evaluar soporte y complejidad.
+
+No se usa Ollama ni otro modelo local. MongoDB y la captura/validación continúan siendo locales y consumen recursos modestos; solo la inferencia se traslada a Google. Una suscripción de consumidor a Gemini no prueba que la API de un proyecto sea gratuita. No se aprovisionan recursos en Azure.
 
 ## Próximas iteraciones
 

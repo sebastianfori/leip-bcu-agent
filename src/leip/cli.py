@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 from uuid import uuid4
 from dotenv import load_dotenv
-from .agent import extract, reference_extraction
+from .agent import extract, reference_extraction, provider, model_name
 from .source import DEFAULT_URL, capture, read_table
 from .storage import persist
 from .validation import validate
@@ -19,10 +19,12 @@ def main():
     parser.add_argument("--no-db", action="store_true", help="Guardar solo JSON")
     parser.add_argument("--output-dir", type=Path, default=Path("data"))
     args = parser.parse_args()
-    run = {"_id": str(uuid4()), "created_at": datetime.now(timezone.utc).isoformat(), "contract_version": "bcu-inflation-median-v1", "mode": "deterministic_demo" if args.demo else "langchain_openai", "model": None if args.demo else os.getenv("OPENAI_MODEL", "gpt-5.5"), "status": "held", "observations": []}
+    run = {"_id": str(uuid4()), "created_at": datetime.now(timezone.utc).isoformat(), "contract_version": "bcu-inflation-median-v1", "mode": "deterministic_demo" if args.demo else f"langchain_{provider()}", "model": None if args.demo else model_name(), "status": "held", "observations": []}
     try:
-        if not args.demo and not os.getenv("OPENAI_API_KEY"):
+        if not args.demo and provider() == "openai" and not os.getenv("OPENAI_API_KEY"):
             raise ValueError("Falta OPENAI_API_KEY. Completá .env o ejecutá --demo.")
+        if not args.demo and provider() == "gemini" and not os.getenv("GEMINI_API_KEY"):
+            parser.exit(1, "Falta GEMINI_API_KEY. Creá una clave Free tier en aistudio.google.com y agregala al .env; no actives facturación para usar la cuota gratuita.\n")
         artifact = capture(args.url, args.output_dir / "artifacts")
         run["artifact"] = artifact
         table = read_table(Path(artifact["path"]).read_bytes())

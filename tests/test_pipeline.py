@@ -65,6 +65,22 @@ def test_reject_mislabelled_horizon():
 
 
 def test_agent_graph_builds_without_api_request(monkeypatch):
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
     monkeypatch.setenv("OPENAI_API_KEY", "test-placeholder-not-a-real-key")
     agent = build_agent(read_table(HTML))
     assert "tools" in agent.get_graph().nodes
+
+
+def test_gemini_agent_graph_builds_without_openai_key(monkeypatch):
+    monkeypatch.setenv("LLM_PROVIDER", "gemini")
+    monkeypatch.setenv("GEMINI_API_KEY", "test-placeholder-not-a-real-key")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    agent = build_agent(read_table(HTML))
+    assert "tools" in agent.get_graph().nodes
+
+
+def test_unsupported_horizon_rejected_by_schema():
+    table = read_table(HTML)
+    table["cells"][0]["horizon_months"] = 18
+    with pytest.raises(ValueError):
+        reference_extraction(table)
